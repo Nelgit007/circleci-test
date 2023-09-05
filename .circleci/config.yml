@@ -8,8 +8,6 @@ jobs:
     executor: python/default
     steps:
       - checkout  # Fetch your source code
-      - python/setup:
-          version: 3.8  # Specify your desired Python version
       - python/install-packages:
           requirements-file: requirements.txt  # Install your project's dependencies
       - run:
