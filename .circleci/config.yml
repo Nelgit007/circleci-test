@@ -1,38 +1,28 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@2.1.1
+
 jobs:
-  build:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.6.4"
+  build-and-test:
+    executor: python/default
     steps:
       - checkout
-      - run: python3 main.py
-  test:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.6.4"
-    steps:
-      - checkout
-      - run: python3 main-test.py
+      - python/install-packages
+      - python/test
+
   lint:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.9"
+    executor: python/default
     steps:
       - checkout
-      - run:
-          name: Install Dependencies
-          command: pip install -r requirements.txt
       - run:
           name: Linter
-          command: flake8 
+          command: |
+            flake8 src/
+            flake8 test/
 
 workflows:
   build_and_test:
     jobs:
-      - build
+      - build-and-test
       - lint
-      - test:
-          requires:
-            - build
