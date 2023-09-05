@@ -14,7 +14,7 @@ jobs:
           requirements-file: requirements.txt  # Install your project's dependencies
       - run:
           name: Build
-          command: python src/main.py 
+          command: python main.py 
 
   lint:
     executor: python/default
@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Linter
           command: |
-            flake8 src/
+            flake8
 
 workflows:
   build_and_test:
