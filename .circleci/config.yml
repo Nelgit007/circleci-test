@@ -1,15 +1,18 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@0.3.2
+  python: circleci/python@2.0.3
 
 jobs:
-  build-and-test:
-    executor: python/default
+  build_and_test: # this can be any name you choose
+    executor: python/default # use the default executor defined within the orb
     steps:
-      - checkout
-      - run: python3 /src/main.py
-      - run: python3 /test/main-test.py
+      - checkout # checkout source code
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Run tests
+          command: python -m main-test.py
 
   lint:
     executor: python/default
@@ -24,5 +27,5 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - build-and-test
+      - build_and_test
       - lint
