@@ -2,9 +2,9 @@ def Add(a, b):
     return a + b
 
 
-def SayHello():
-    print("sup world from srcmake")
+def MyInfo():
+    print("Hello, My Name is Nelson Osagie and I am a DevOps / Cloud Engineer")
 
 
 if __name__ == '__main__':
-    SayHello()
+    MyInfo()
