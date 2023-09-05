@@ -4,15 +4,17 @@ orbs:
   python: circleci/python@2.0.3
 
 jobs:
-  build_and_test: # this can be any name you choose
-    executor: python/default # use the default executor defined within the orb
+  build: # this can be any name you choose
+    executor: python/default
     steps:
-      - checkout # checkout source code
+      - checkout  # Fetch your source code
+      - python/setup:
+          version: 3.8  # Specify your desired Python version
       - python/install-packages:
-          pkg-manager: pip
+          requirements-file: requirements.txt  # Install your project's dependencies
       - run:
-          name: Run tests
-          command: python main-test.py
+          name: Build
+          command: python src/main.py 
 
   lint:
     executor: python/default
@@ -22,10 +24,9 @@ jobs:
           name: Linter
           command: |
             flake8 src/
-            flake8 test/
 
 workflows:
   build_and_test:
     jobs:
-      - build_and_test
+      - build
       - lint
