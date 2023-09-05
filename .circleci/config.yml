@@ -15,6 +15,16 @@ jobs:
     steps:
       - checkout
       - run: python3 main-test.py
+  lint:
+    working_directory: ~/circleci-python
+    docker:
+      - image: "circleci/python:3.6.4"
+    steps:
+      - checkout
+      - run:
+          name: Linter
+          command: |
+            flake8 .
 
 workflows:
   build_and_test:
@@ -23,3 +33,4 @@ workflows:
       - test:
           requires:
             - build
+      - lint
