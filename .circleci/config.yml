@@ -8,8 +8,8 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      - python/install-packages
-      - python/test
+      - run: python3 src/main.py
+      - run: python3 test/main-test.py
 
   lint:
     executor: python/default
