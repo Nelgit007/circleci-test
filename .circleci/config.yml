@@ -14,11 +14,6 @@ jobs:
       - run:
           name: Build
           command: python main.py
-      - store_artifacts:
-          path: .
-          destination: .
-      - store_test_results:
-          path: .
 
   lint:
     executor: python/default
