@@ -15,10 +15,10 @@ jobs:
           name: Build
           command: python main.py
       - store_artifacts:
-          path: /build-result
-          destination: raw-buil-result
+          path: .
+          destination: .
       - store_test_results:
-          path: /build-result
+          path: .
 
   lint:
     executor: python/default
