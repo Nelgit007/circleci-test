@@ -17,6 +17,8 @@ jobs:
       - store_artifacts:
           path: /tmp/build-result
           destination: raw-buil-result
+      - store_test_results:
+          path: /temp/build-result
 
   lint:
     executor: python/default
