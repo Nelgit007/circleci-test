@@ -23,7 +23,6 @@ jobs:
       - aws-ecr/aws-auth:
           aws-access-key-id: $AWS_ACCESS_KEY_ID
           aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
-          aws-region: us-east-1  # Replace with your AWS region
 
       - run:
           name: Build and Push Docker Image to ECR
@@ -45,11 +44,10 @@ jobs:
             flake8
 
 workflows:
-  build-and-lint:
+  build:
     jobs:
       - build
       - push-to-ecr:
-          aws-region: us-east-1  # Replace with your AWS region
           filters:
             branches:
               only:
