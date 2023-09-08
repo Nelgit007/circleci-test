@@ -17,6 +17,21 @@ jobs:
           name: Build
           command: python main.py
 
+  push-to-ecr:
+    executor: aws-ecr/default
+    steps:
+      - aws-ecr/aws-auth:
+          aws-access-key-id: $AWS_ACCESS_KEY_ID
+          aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
+          aws-region: us-east-1  # Replace with your AWS region
+
+      - run:
+          name: Build and Push Docker Image to ECR
+          command: |
+            docker build -t my-python-app .
+            docker tag web-app:latest 227739336694.dkr.ecr.us-east-1.amazonaws.com/my-python-app:latest
+            docker push 227739336694.dkr.ecr.us-east-1.amazonaws.com/web-app:latest
+
   lint:
     executor: python/default
     steps:
@@ -33,4 +48,10 @@ workflows:
   build-and-lint:
     jobs:
       - build
+      - push-to-ecr:
+          aws-region: us-east-1  # Replace with your AWS region
+          filters:
+            branches:
+              only:
+                - main  # Adjust the branch name as needed
       - lint
